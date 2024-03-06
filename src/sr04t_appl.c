@@ -5,7 +5,12 @@
 extern "C" {
 #endif
 
-static GPIO_InitTypeDef  GPIO_InitStruct;
+/* Size of Transmission buffer */
+#define TXBUFFERSIZE   1
+/* Buffer used for transmission */
+uint8_t aTxBuffer[TXBUFFERSIZE] = {0x55};
+
+UART_HandleTypeDef UartHandle;
 
 void SystemClock_Config(void);
 
@@ -16,20 +21,32 @@ int main()
   /* Configure the system clock to 2 MHz */
   SystemClock_Config();
 
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+  /*Configure the UART peripheral */
+  /* Put the USART peripheral in the Asynchronous mode (UART Mode) */
+  /* UART configured as follows:
+      - Word Length = 8 Bits (7 data bit + 1 parity bit) : 
+	                  BE CAREFUL : Program 7 data bits + 1 parity bit in PC HyperTerminal
+      - Stop Bit    = One Stop bit
+      - Parity      = ODD parity
+      - BaudRate    = 9600 baud
+      - Hardware flow control disabled (RTS and CTS signals) */
+  UartHandle.Instance        = USART2;
 
-  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull  = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-
-  GPIO_InitStruct.Pin = GPIO_PIN_3;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  UartHandle.Init.BaudRate   = 9600;
+  UartHandle.Init.WordLength = UART_WORDLENGTH_8B;
+  UartHandle.Init.StopBits   = UART_STOPBITS_1;
+  UartHandle.Init.Parity     = UART_PARITY_ODD;
+  UartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+  UartHandle.Init.Mode       = UART_MODE_TX_RX;
+  if (HAL_UART_Init(&UartHandle) != HAL_OK)
+  {
+    /* Initialization Error */
+  }
 
   while(1)
   {
-    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_3);
-    /* Insert delay 500 ms */
-    HAL_Delay(500);
+    HAL_UART_Transmit(&UartHandle, (uint8_t*)aTxBuffer, TXBUFFERSIZE, 5000);
+    HAL_Delay(1000);
   }
 }
 

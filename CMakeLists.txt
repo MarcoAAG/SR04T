@@ -19,7 +19,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/startup.c
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/stm32l0xx_it.c
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/system_stm32l0xx.c
-    # system_stm32l4xx.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/stm32l0xx_hal_msp.c
 )
 
 # Include directories
