@@ -13,10 +13,28 @@
 #ifndef SR04T_LIB_H
 #define SR04T_LIB_H
 
+#include <stdint.h>
+#include <stm32l0xx_hal.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#define OP_MODE_3
+
+
+#ifdef OP_MODE_1
+//code for OP_MODE1
+#endif
+
+#ifdef OP_MODE_2
+//code for OP_MODE2
+#endif
+
+#ifdef OP_MODE_3
+//code for OP_MODE3
+uint16_t v_GetDistance(UART_HandleTypeDef *huart);
+#endif
 
 #ifdef __cplusplus
 }

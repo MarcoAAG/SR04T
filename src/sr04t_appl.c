@@ -5,12 +5,9 @@
 extern "C" {
 #endif
 
-/* Size of Transmission buffer */
-#define TXBUFFERSIZE   1
-/* Buffer used for transmission */
-uint8_t aTxBuffer[TXBUFFERSIZE] = {0x55};
-
 UART_HandleTypeDef UartHandle;
+
+uint16_t u_myDistance;
 
 void SystemClock_Config(void);
 
@@ -45,7 +42,7 @@ int main()
 
   while(1)
   {
-    HAL_UART_Transmit(&UartHandle, (uint8_t*)aTxBuffer, TXBUFFERSIZE, 5000);
+    u_myDistance = v_GetDistance(&UartHandle);
     HAL_Delay(1000);
   }
 }
