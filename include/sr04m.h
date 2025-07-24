@@ -1,5 +1,5 @@
 /**********************************************************************************************************************
- * \file sr04t.h
+ * \file sr04m.h
  *
  * \author MarcoAAG
  *
@@ -7,12 +7,12 @@
  *
  * \version 1.0 \n \n
  *
- * \brief Implementation of the SR04T driver
+ * \brief Implementation of the SR04M driver
  *
  *********************************************************************************************************************/
 
-#ifndef SR04T_H
-#define SR04T_H
+#ifndef SR04M_H
+#define SR04M_H
 
 /* ============================================================================================== */
 /*                                         Include Files                                          */
@@ -31,32 +31,32 @@ extern "C" {
  *  \brief Constants for function return values.
  *
  *  \details Defines the standard return values
- *           for SR04T-related functions.
+ *           for SR04M-related functions.
  */
-/** @{ */               /* Start SR04T return codes group */
-#define SR04T_OK    (0) ///< Operation completed successfully
-#define SR04T_ERROR (1) ///< Operation failed or error occurred
-/** @} */               /* End SR04T return codes group */
+/** @{ */               /* Start SR04M return codes group */
+#define SR04M_OK    (0) ///< Operation completed successfully
+#define SR04M_ERROR (1) ///< Operation failed or error occurred
+/** @} */               /* End SR04M return codes group */
 
 /* ============================================================================================== */
 /*                                         Public Types                                           */
 /* ============================================================================================== */
-typedef uint32_t (*SR04T_WriteRegFunc)(uint8_t*, uint8_t);
-typedef uint32_t (*SR04T_ReadRegFunc)(uint8_t*, uint8_t);
-typedef uint32_t (*SR04T_WriteFunc)(void*, uint8_t*, uint8_t);
-typedef uint32_t (*SR04T_ReadFunc)(void*, uint8_t*, uint8_t);
+typedef uint32_t (*SR04M_WriteRegFunc)(uint8_t*, uint8_t);
+typedef uint32_t (*SR04M_ReadRegFunc)(uint8_t*, uint8_t);
+typedef uint32_t (*SR04M_WriteFunc)(void*, uint8_t*, uint8_t);
+typedef uint32_t (*SR04M_ReadFunc)(void*, uint8_t*, uint8_t);
 
 /** **********************************************************************************************
- * \defgroup SR04T_Context SR04T Driver Context
- * \brief Data structure used to configure and access the SR04T ultrasonic sensor.
+ * \defgroup SR04M_Context SR04M Driver Context
+ * \brief Data structure used to configure and access the SR04M ultrasonic sensor.
  * @{
  */
 
 /**
- * \brief SR04T driver context structure.
+ * \brief SR04M driver context structure.
  *
  * Holds function pointers for low-level register access and a device handle.
- * This context must be initialized before using the SR04T driver functions.
+ * This context must be initialized before using the SR04M driver functions.
  */
 typedef struct
 {
@@ -64,21 +64,21 @@ typedef struct
    * \brief Function pointer to write to a device register.
    *
    * This function is called to perform register writes.
-   * It should match the SR04T_WriteFunc signature defined by the driver.
+   * It should match the SR04M_WriteFunc signature defined by the driver.
    *
    * \note The implementation is platform-dependent.
    */
-  SR04T_WriteFunc writeReg;
+  SR04M_WriteFunc writeReg;
 
   /**
    * \brief Function pointer to read from a device register.
    *
    * This function is called to perform register reads.
-   * It should match the SR04T_ReadFunc signature defined by the driver.
+   * It should match the SR04M_ReadFunc signature defined by the driver.
    *
    * \note The implementation is platform-dependent.
    */
-  SR04T_ReadFunc readReg;
+  SR04M_ReadFunc readReg;
 
   /**
    * \brief Device-specific handle passed to the low-level functions.
@@ -88,18 +88,18 @@ typedef struct
    */
   void* handle;
 
-} SR04T_CTX;
+} SR04M_CTX;
 
-/** @} */ // end of SR04T_Context
+/** @} */ // end of SR04M_Context
 
 /** **********************************************************************************************
- * \defgroup SR04T_IO_Interface SR04T Low-Level IO Interface
- * \brief Structure for low-level I/O function pointers for the SR04T ultrasonic sensor.
+ * \defgroup SR04M_IO_Interface SR04M Low-Level IO Interface
+ * \brief Structure for low-level I/O function pointers for the SR04M ultrasonic sensor.
  * @{
  */
 
 /**
- * \brief SR04T low-level I/O function interface.
+ * \brief SR04M low-level I/O function interface.
  *
  * Contains function pointers used to perform register-level read and write operations.
  * This interface abstracts the hardware-dependent access mechanisms such as I2C or SPI.
@@ -110,37 +110,37 @@ typedef struct
    * \brief Function pointer to write to a device register.
    *
    * Called by the driver to perform register writes.
-   * Must conform to the SR04T_WriteRegFunc signature.
+   * Must conform to the SR04M_WriteRegFunc signature.
    *
    * \note The implementation is platform-specific.
    */
-  SR04T_WriteRegFunc writeReg;
+  SR04M_WriteRegFunc writeReg;
 
   /**
    * \brief Function pointer to read from a device register.
    *
    * Called by the driver to perform register reads.
-   * Must conform to the SR04T_ReadRegFunc signature.
+   * Must conform to the SR04M_ReadRegFunc signature.
    *
    * \note The implementation is platform-specific.
    */
-  SR04T_ReadRegFunc readReg;
+  SR04M_ReadRegFunc readReg;
 
-} SR04T_IO;
+} SR04M_IO;
 
-/** @} */ // end of SR04T_IO_Interface
+/** @} */ // end of SR04M_IO_Interface
 
 /** **********************************************************************************************
- * \defgroup SR04T_Object_Instance SR04T Driver Instance Object
- * \brief Structure representing a complete instance of the SR04T driver.
+ * \defgroup SR04M_Object_Instance SR04M Driver Instance Object
+ * \brief Structure representing a complete instance of the SR04M driver.
  * @{
  */
 
 /**
- * \brief SR04T driver instance object.
+ * \brief SR04M driver instance object.
  *
  * Represents a complete driver instance including I/O interface, context, and internal state.
- * This structure is typically used by application code to manage the SR04T driver lifecycle.
+ * This structure is typically used by application code to manage the SR04M driver lifecycle.
  */
 typedef struct
 {
@@ -148,11 +148,11 @@ typedef struct
    * \brief Low-level I/O interface for register access.
    *
    * Contains platform-specific read and write function pointers required to communicate
-   * with the SR04T sensor at the register level.
+   * with the SR04M sensor at the register level.
    *
-   * \see SR04T_IO
+   * \see SR04M_IO
    */
-  SR04T_IO io;
+  SR04M_IO io;
 
   /**
    * \brief Driver context structure.
@@ -160,9 +160,9 @@ typedef struct
    * Includes function pointers and device handle used internally by the driver to
    * manage operations and maintain state.
    *
-   * \see SR04T_CTX
+   * \see SR04M_CTX
    */
-  SR04T_CTX ctx;
+  SR04M_CTX ctx;
 
   /**
    * \brief Flag indicating whether the driver has been initialized.
@@ -171,41 +171,41 @@ typedef struct
    */
   uint8_t isInitialized;
 
-} SR04T_Object;
+} SR04M_Object;
 
-/** @} */ // end of SR04T_Object_Instance
+/** @} */ // end of SR04M_Object_Instance
 
 /* ============================================================================================== */
 /*                                         Public Functions                                       */
 /* ============================================================================================== */
 
 /** **********************************************************************************************
- * \brief Initializes the SR04T driver instance.
+ * \brief Initializes the SR04M driver instance.
  *
  * This function configures the driver with the provided I/O interface and prepares it
  * for operation. It sets up internal state and must be called before any other driver function.
  *
- * \param[in,out] p_obj Pointer to the SR04T_Object instance to be initialized.
- * \param[in]     p_io  Pointer to the SR04T_IO structure containing low-level I/O functions.
+ * \param[in,out] p_obj Pointer to the SR04M_Object instance to be initialized.
+ * \param[in]     p_io  Pointer to the SR04M_IO structure containing low-level I/O functions.
  *
- * \retval SR04T_OK    Initialization successful.
- * \retval SR04T_ERROR Null pointer or invalid function pointers provided.
+ * \retval SR04M_OK    Initialization successful.
+ * \retval SR04M_ERROR Null pointer or invalid function pointers provided.
  */
-uint8_t SR04T_u_Init(SR04T_Object* p_obj, SR04T_IO* p_io);
+uint8_t SR04M_u_Init(SR04M_Object* p_obj, SR04M_IO* p_io);
 
 /** **********************************************************************************************
- * \brief Measures and returns the distance detected by the SR04T sensor.
+ * \brief Measures and returns the distance detected by the SR04M sensor.
  *
  * This function triggers the measurement process and returns the measured distance in centimeters.
  *
- * \param[in] p_obj Pointer to the initialized SR04T_Object instance.
+ * \param[in] p_obj Pointer to the initialized SR04M_Object instance.
  *
  * \return Distance in centimeters (0–400). Returns 0 if measurement fails or sensor is not initialized.
  */
-uint16_t SR04T_u_GetDistance(SR04T_Object* p_obj);
+uint16_t SR04M_u_GetDistance(SR04M_Object* p_obj);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // SR04T_H
+#endif // SR04M_H
