@@ -27,17 +27,6 @@ extern "C" {
 /*                                        Defines & Macros                                        */
 /* ============================================================================================== */
 
-/** **********************************************************************************************
- *  \brief Constants for function return values.
- *
- *  \details Defines the standard return values
- *           for SR04M-related functions.
- */
-/** @{ */               /* Start SR04M return codes group */
-#define SR04M_OK    (0) ///< Operation completed successfully
-#define SR04M_ERROR (1) ///< Operation failed or error occurred
-/** @} */               /* End SR04M return codes group */
-
 /* ============================================================================================== */
 /*                                         Public Types                                           */
 /* ============================================================================================== */
@@ -175,6 +164,21 @@ typedef struct
 
 /** @} */ // end of SR04M_Object_Instance
 
+typedef enum
+{
+  MODE1 = 1,
+  MODE2,
+  MODE3,
+  MODE4,
+  MODE5
+} SR04M_Modes;
+
+typedef enum
+{
+  SR04M_OK    = 0,
+  SR04M_ERROR = -1
+} SR04M_Status;
+
 /* ============================================================================================== */
 /*                                         Public Functions                                       */
 /* ============================================================================================== */
@@ -191,7 +195,7 @@ typedef struct
  * \retval SR04M_OK    Initialization successful.
  * \retval SR04M_ERROR Null pointer or invalid function pointers provided.
  */
-uint8_t SR04M_u_Init(SR04M_Object* p_obj, SR04M_IO* p_io);
+SR04M_Status SR04M_u_Init(SR04M_Object* p_obj, SR04M_IO* p_io, SR04M_Modes te_mode);
 
 /** **********************************************************************************************
  * \brief Measures and returns the distance detected by the SR04M sensor.
@@ -202,7 +206,7 @@ uint8_t SR04M_u_Init(SR04M_Object* p_obj, SR04M_IO* p_io);
  *
  * \return Distance in centimeters (0–400). Returns 0 if measurement fails or sensor is not initialized.
  */
-uint16_t SR04M_u_GetDistance(SR04M_Object* p_obj);
+SR04M_Status SR04M_u_GetDistance(SR04M_Object* p_obj, uint16_t* u_distance);
 
 #ifdef __cplusplus
 }
